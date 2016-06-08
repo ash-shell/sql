@@ -1,3 +1,4 @@
 name: SQL
 package: github.com/ash-shell/sql
 default_alias: sql
+test_prefix: Sql

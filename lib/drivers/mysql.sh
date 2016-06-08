@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Temporary config file location
-Sql_MYSQL_CONFIG_FILE="/tmp/ash_sql_mysql_config.cnf"
+SQL_MYSQL_CONFIG_FILE="/tmp/ash_sql_mysql_config.cnf"
 
 #################################################
 # Executes a database statement and
@@ -11,7 +11,7 @@ Sql_MYSQL_CONFIG_FILE="/tmp/ash_sql_mysql_config.cnf"
 #################################################
 Sql__execute() {
     "$SQL_MYSQL_PATH" \
-        --defaults-extra-file="$Sql_MYSQL_CONFIG_FILE" \
+        --defaults-extra-file="$SQL_MYSQL_CONFIG_FILE" \
         --database="$SQL_MYSQL_DATABASE_NAME" \
         --silent \
         --skip-column-names \
@@ -39,19 +39,19 @@ Sql_driver_open() {
     fi
 
     # Deleting old mysql config file if it existed
-    if [[ -e "$Sql_MYSQL_CONFIG_FILE" ]]; then
-        rm "$Sql_MYSQL_CONFIG_FILE"
+    if [[ -e "$SQL_MYSQL_CONFIG_FILE" ]]; then
+        rm "$SQL_MYSQL_CONFIG_FILE"
     fi
 
     # Creating new MySQL config file
-    touch "$Sql_MYSQL_CONFIG_FILE"
-    chmod 600 "$Sql_MYSQL_CONFIG_FILE"
+    touch "$SQL_MYSQL_CONFIG_FILE"
+    chmod 600 "$SQL_MYSQL_CONFIG_FILE"
 
-    echo "[client]" >> "$Sql_MYSQL_CONFIG_FILE"
-    echo "user = $SQL_MYSQL_USER" >> "$Sql_MYSQL_CONFIG_FILE"
-    echo "password = $SQL_MYSQL_PASSWORD" >> "$Sql_MYSQL_CONFIG_FILE"
-    echo "host = $SQL_MYSQL_HOST" >> "$Sql_MYSQL_CONFIG_FILE"
-    echo "port = $SQL_MYSQL_PORT" >> "$Sql_MYSQL_CONFIG_FILE"
+    echo "[client]" >> "$SQL_MYSQL_CONFIG_FILE"
+    echo "user = $SQL_MYSQL_USER" >> "$SQL_MYSQL_CONFIG_FILE"
+    echo "password = $SQL_MYSQL_PASSWORD" >> "$SQL_MYSQL_CONFIG_FILE"
+    echo "host = $SQL_MYSQL_HOST" >> "$SQL_MYSQL_CONFIG_FILE"
+    echo "port = $SQL_MYSQL_PORT" >> "$SQL_MYSQL_CONFIG_FILE"
 }
 
 #################################################
@@ -59,7 +59,7 @@ Sql_driver_open() {
 #################################################
 Sql_driver_close() {
     # Deleting old mysql config file if it existed
-    if [[ -e "$Sql_MYSQL_CONFIG_FILE" ]]; then
-        rm "$Sql_MYSQL_CONFIG_FILE"
+    if [[ -e "$SQL_MYSQL_CONFIG_FILE" ]]; then
+        rm "$SQL_MYSQL_CONFIG_FILE"
     fi
 }

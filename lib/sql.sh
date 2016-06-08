@@ -16,7 +16,8 @@ Sql__DRIVER_POSTGRES='postgres'
 Sql__open() {
     local driver="$1"
     if [[ "$driver" = "" ]]; then
-        Logger__error "Sql__open must be passed a database driver name"
+        echo "Sql__open must be passed a database driver name"
+        return 1
     fi
 
     # Loading the appropriate database driver
@@ -25,8 +26,8 @@ Sql__open() {
     elif [[ "$driver" = "$Sql__DRIVER_POSTGRES" ]]; then
         . "$Sql__PACKAGE_LOCATION/lib/drivers/postgres.sh"
     else
-        Logger__error "Invalid sql driver name '$driver'"
-        return
+        echo "Invalid sql driver name '$driver'"
+        return 1
     fi
 
     # Run any driver specific logic
