@@ -136,3 +136,68 @@ Sql__test_postgres_open(){
         return 1
     fi
 }
+
+#################################################
+# Tests a successful PostgreSQL query
+#################################################
+Sql__test_postgres_query(){
+    # Open DB
+    Sql__open "$Sql__DRIVER_POSTGRES"
+
+    # Query
+    local formatted_result=""
+    local result=""
+    result="$(Sql__execute "SELECT * FROM people;")"
+
+    # Handle result
+    if [[ $? -eq 0 ]]; then
+        # Echo Result
+        while read -r record; do
+            while IFS=$'\t' read id name; do
+                if [[ "$formatted_result" = "" ]]; then
+                    formatted_result="$id,$name"
+                else
+                    formatted_result="$formatted_result | $id,$name"
+                fi
+            done <<< "$record"
+        done <<< "$result"
+    else
+        echo "Something wrong with query!"
+        echo "$result"
+        return 1
+    fi
+
+    # Verify result
+    local expected_result="1,Brandon | 2,Ryan | 3,Rigby | 4,Norbert"
+    if [[ "$formatted_result" != "$expected_result" ]]; then
+        echo "Something wrong with query result!"
+        echo "Expected: '$expected_result'"
+        echo "Actual:   '$formatted_result'"
+        return 1
+    fi
+
+    # Close DB
+    Sql__close
+}
+
+#################################################
+# Tests the a failed PostgreSQL query
+#################################################
+Sql__test_postgres_query_failure(){
+    # Open DB
+    Sql__open "$Sql__DRIVER_POSTGRES"
+
+    # Query
+    result="$(Sql__execute "SELECT * FROM;")"
+
+    # Handle result
+    if [[ $? -eq 0 ]]; then
+        echo "Query should have failed, but was successful!"
+        echo "Output:"
+        echo "$result"
+        return 1
+    fi
+
+    # Close DB
+    Sql__close
+}

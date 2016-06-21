@@ -15,7 +15,7 @@ Sql__execute() {
         --command "$1" \
         --no-align \
         --field-separator="	" \
-        --record-separator="\r\n" \
+        --record-separator="\n" \
         --tuples-only 2>&1)
     result="$?"
     printf "$output"
