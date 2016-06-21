@@ -96,8 +96,26 @@ Sql__test_mysql_query(){
     Sql__close
 }
 
+#################################################
+# Tests the a failed MySQL query
+#################################################
 Sql__test_mysql_query_failure(){
+    # Open DB
+    Sql__open "$Sql__DRIVER_MYSQL"
 
+    # Query
+    result="$(Sql__execute "SELECT * FROM;")"
+
+    # Handle result
+    if [[ $? -eq 0 ]]; then
+        echo "Query should have failed, but was successful!"
+        echo "Output:"
+        echo "$result"
+        return 1
+    fi
+
+    # Close DB
+    Sql__close
 }
 
 #################################################
