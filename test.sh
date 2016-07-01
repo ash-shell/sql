@@ -68,7 +68,6 @@ Sql__test_mysql_query(){
     if [[ $? -eq 0 ]]; then
         # Echo Result
         while read -r record; do
-            #echo $record
             while IFS=$'\t' read id name; do
                 if [[ $formatted_result = "" ]]; then
                     formatted_result="$id,$name"
