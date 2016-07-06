@@ -164,3 +164,7 @@ If you want to use local variables inside of functions, they must be declared be
 local result=""
 result="$(Sql__execute "SELECT * FROM people;")"
 ```
+
+## License
+
+[MIT](./LICENSE.md)
