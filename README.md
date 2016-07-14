@@ -1,5 +1,7 @@
 # SQL
 
+[![Build Status](https://travis-ci.org/ash-shell/sql.svg?branch=br.travis)](https://travis-ci.org/ash-shell/sql)
+
 SQL is a SQL driver for [Ash](https://github.com/ash-shell/ash).
 
 ## Getting Started
