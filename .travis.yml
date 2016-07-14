@@ -4,6 +4,7 @@ os:
 language: bash
 
 before_install:
+    - if [[ $(which brew) ]]; then brew install mysql; fi
     - echo "$SQL_POSTGRES_HOST:*:*:$SQL_POSTGRES_USER:$SQL_POSTGRES_PASSWORD" > ~/.pgpass
     - chmod 600 ~/.pgpass
 
