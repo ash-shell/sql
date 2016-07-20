@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.org/ash-shell/sql.svg?branch=br.travis)](https://travis-ci.org/ash-shell/sql)
 
-SQL is a SQL driver for [Ash](https://github.com/ash-shell/ash).
+SQL is a SQL driver for [Ash](https://github.com/ash-shell/ash).  This library provides a clean and unified interface to interact with multiple types of database.  Currently there is support for MySQL and PostgreSQL.
 
 ## Getting Started
 
@@ -136,6 +136,22 @@ else
     echo "Something wrong with query!"
     echo "$result"                          # Prints the error message!
     return 1
+fi
+```
+
+### Checking If Tables Exist
+
+You may run into a situation where you would like to see if a table exists, before running a query on the database.  This library provides the function `Sql__table_exists`.
+
+Ignoring the code for opening/closing your database, checking if a table exists should look something like this:
+
+```sh
+# Test that "people" table exists
+Sql__table_exists "people"
+if [[ "$?" -eq 0 ]]; then
+    echo "Table exists!"
+else
+    echo "Table does not exist!"
 fi
 ```
 
