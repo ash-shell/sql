@@ -23,6 +23,32 @@ Sql__execute() {
 }
 
 #################################################
+# Checks if a specific table exists in the
+# database.
+#
+# @param $1: The name of the table to check if
+#   if it exists.
+# @returns: 0 if a table exists, 1 if no table
+#   exists
+#################################################
+Sql__table_exists() {
+    local sql=''
+    read -d '' sql <<____EOF
+    SELECT count(*)
+    FROM information_schema.tables
+    WHERE table_schema = 'public'
+        AND table_name = '$1';
+____EOF
+
+    local count=$(Sql__execute "${sql}")
+    if [ "$count" -eq 1 ]; then
+        return 0 # Table exists
+    else
+        return 1 # Table does not exist
+    fi
+}
+
+#################################################
 # Do nothing, no driver specific setup
 #################################################
 Sql_driver_open() {

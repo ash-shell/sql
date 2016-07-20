@@ -200,3 +200,55 @@ Sql__test_postgres_query_failure(){
     # Close DB
     Sql__close
 }
+
+#################################################
+# Test the successful and unsuccessful case for
+# the Sql__table_exists function for PostgreSQL
+#################################################
+Sql__test_postgres_table_exists(){
+    # Open DB
+    Sql__open "$Sql__DRIVER_POSTGRES"
+
+    # Test that "people" table exists
+    Sql__table_exists "people"
+    if [[ "$?" -ne 0 ]]; then
+        echo "Table 'people' should exist, but it does not!"
+        return 1
+    fi
+
+    # Test that "animals" table does not exist
+    Sql__table_exists "animals"
+    if [[ "$?" -eq 0 ]]; then
+        echo "Table 'animals' should not exist, but it does!"
+        return 1
+    fi
+
+    # Close DB
+    Sql__close
+}
+
+#################################################
+# Test the successful and unsuccessful case for
+# the Sql__table_exists function for MySQL
+#################################################
+Sql__test_mysql_table_exists(){
+    # Open DB
+    Sql__open "$Sql__DRIVER_MYSQL"
+
+    # Test that "people" table exists
+    Sql__table_exists "people"
+    if [[ "$?" -ne 0 ]]; then
+        echo "Table 'people' should exist, but it does not!"
+        return 1
+    fi
+
+    # Test that "animals" table does not exist
+    Sql__table_exists "animals"
+    if [[ "$?" -eq 0 ]]; then
+        echo "Table 'animals' should not exist, but it does!"
+        return 1
+    fi
+
+    # Close DB
+    Sql__close
+}

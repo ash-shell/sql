@@ -21,6 +21,25 @@ Sql__execute() {
 }
 
 #################################################
+# Checks if a specific table exists in the
+# database.
+#
+# @param $1: The name of the table to check if
+#   if it exists.
+# @returns: 0 if a table exists, 1 if no table
+#   exists
+#################################################
+Sql__table_exists() {
+    local sql="SHOW TABLES LIKE '$1';"
+    local output=$(Sql__execute "$sql")
+    if [ "$output" != "" ]; then
+        return 0 # Table exists
+    else
+        return 1 # Table does not exist
+    fi
+}
+
+#################################################
 # Generates the MySQL config file to be used
 #################################################
 Sql_driver_open() {
