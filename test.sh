@@ -115,6 +115,14 @@ Sql_test_generic_open() {
         echo "'Sql__close' returned an error"
         return 1
     fi
+
+    # Test connection
+    local ping_output
+    ping_output=$(Sql__ping)
+    if [[ $? -eq 0 ]]; then
+        echo "Database not closed properly, can still ping the database after closing"
+        return 1
+    fi
 }
 
 #################################################
