@@ -3,12 +3,21 @@
 #################################################
 # Tests the failure cases of Sql__open
 #################################################
-Sql__test_open_failure(){
+Sql__test_open_failure() {
     # Trying to run 'Sql__open' with an invalid driver
     open_hello=$(Sql__open "hello")
     if [[ $? -eq 0 ]]; then
         echo "'Sql__open' should return an error when trying to open driver 'hello'"
         return 1;
+    fi
+
+    # Test connection
+    local ping_output
+    ping_output=$(Sql__ping)
+    if [[ $? -eq 0 ]]; then
+        Sql__close
+        echo "Should not be connected to a database on an open failure"
+        return 1
     fi
 
     # Trying to run 'Sql__open' with no driver
@@ -22,104 +31,90 @@ Sql__test_open_failure(){
 #################################################
 # Tests the success case of Sql__open for PostgreSQL
 #################################################
-Sql__test_postgres_open(){
-    # Open DB
-    Sql__open "$Sql__DRIVER_POSTGRES"
-    if [[ $? -ne 0 ]]; then
-        echo "'Sql__open' returned an error"
-        return 1
-    fi
-
-    # Close DB
-    Sql__close
-    if [[ $? -ne 0 ]]; then
-        echo "'Sql__close' returned an error"
-        return 1
-    fi
+Sql__test_postgres_open() {
+    Sql_test_generic_open "$Sql__DRIVER_POSTGRES"
 }
 
 #################################################
 # Tests the success case of Sql__open for MySQL
-#
-# This tests differs from PostgreSQL because
-# this actually tests an implementation detail
-# that users don't particularly need to worry
-# about, but is important to test from the
-# testing end.  The two interfaces for both
-# drivers are still exactly the same.
 #################################################
-Sql__test_mysql_open(){
-    # Open DB
-    Sql__open "$Sql__DRIVER_MYSQL"
-    if [[ $? -ne 0 ]]; then
-        echo "'Sql__open' returned an error"
-        return 1
-    fi
-
-    # Verify MySQL config file was created
-    if [[ ! -f "$SQL_MYSQL_CONFIG_FILE" ]]; then
-        echo "MySQL config file was not created"
-        echo "Make sure you have permissions to write to $SQL_MYSQL_CONFIG_FILE"
-        return 1
-    fi
-
-    # Close DB
-    Sql__close
-    if [[ $? -ne 0 ]]; then
-        echo "'Sql__close' returned an error"
-        return 1
-    fi
-
-    # Verify MySQL config file was deleted
-    if [[ -f "$SQL_MYSQL_CONFIG_FILE" ]]; then
-        echo "MySQL config file was not deleted"
-        echo "Make sure you have permissions to delete $SQL_MYSQL_CONFIG_FILE"
-        return 1
-    fi
+Sql__test_mysql_open() {
+    Sql_test_generic_open "$Sql__DRIVER_MYSQL"
 }
 
 #################################################
 # Tests a successful PostgreSQL query
 #################################################
-Sql__test_postgres_query(){
-    Sql__generic_test_query "$Sql__DRIVER_POSTGRES"
+Sql__test_postgres_query() {
+    Sql_test_generic_query "$Sql__DRIVER_POSTGRES"
 }
 
 #################################################
 # Tests a successful MySQL query
 #################################################
-Sql__test_mysql_query(){
-    Sql__generic_test_query "$Sql__DRIVER_MYSQL"
+Sql__test_mysql_query() {
+    Sql_test_generic_query "$Sql__DRIVER_MYSQL"
 }
 
 #################################################
 # Tests the a failed PostgreSQL query
 #################################################
-Sql__test_postgres_query_failure(){
-    Sql__generic_test_query_failure "$Sql__DRIVER_POSTGRES"
+Sql__test_postgres_query_failure() {
+    Sql_test_generic_query_failure "$Sql__DRIVER_POSTGRES"
 }
 
 #################################################
 # Tests the a failed MySQL query
 #################################################
-Sql__test_mysql_query_failure(){
-    Sql__generic_test_query_failure "$Sql__DRIVER_MYSQL"
+Sql__test_mysql_query_failure() {
+    Sql_test_generic_query_failure "$Sql__DRIVER_MYSQL"
 }
 
 #################################################
 # Test the successful and unsuccessful case for
 # the Sql__table_exists function for PostgreSQL
 #################################################
-Sql__test_postgres_table_exists(){
-    Sql__generic_test_table_exists "$Sql__DRIVER_POSTGRES"
+Sql__test_postgres_table_exists() {
+    Sql_test_generic_table_exists "$Sql__DRIVER_POSTGRES"
 }
 
 #################################################
 # Test the successful and unsuccessful case for
 # the Sql__table_exists function for MySQL
 #################################################
-Sql__test_mysql_table_exists(){
-    Sql__generic_test_table_exists "$Sql__DRIVER_MYSQL"
+Sql__test_mysql_table_exists() {
+    Sql_test_generic_table_exists "$Sql__DRIVER_MYSQL"
+}
+
+#################################################
+# Tests the success case of Sql__open for a driver
+#
+# @param $1: The driver to test
+#################################################
+Sql_test_generic_open() {
+    # Open DB
+    Sql__open "$1"
+    if [[ $? -ne 0 ]]; then
+        echo "'Sql__open' returned an error"
+        return 1
+    fi
+
+    # Test connection
+    local ping_output
+    ping_output=$(Sql__ping)
+    if [[ $? -ne 0 ]]; then
+        Sql__close
+        echo -e "Error connecting to database:"
+        echo "$ping_output"
+        return 1
+    fi
+
+    # Close DB
+    Sql__close
+    if [[ $? -ne 0 ]]; then
+        echo "'Sql__close' returned an error"
+        return 1
+    fi
 }
 
 #################################################
@@ -128,7 +123,7 @@ Sql__test_mysql_table_exists(){
 #
 # @param $1: The driver to test
 #################################################
-Sql__generic_test_query(){
+Sql_test_generic_query() {
     # Open DB
     Sql__open "$1"
 
@@ -174,7 +169,7 @@ Sql__generic_test_query(){
 #
 # @param $1: The driver to test
 #################################################
-Sql__generic_test_query_failure() {
+Sql_test_generic_query_failure() {
     # Open DB
     Sql__open "$1"
     if [[ $? -ne 0 ]]; then
@@ -203,7 +198,7 @@ Sql__generic_test_query_failure() {
 #
 # @param $1: The driver to test
 #################################################
-Sql__generic_test_table_exists() {
+Sql_test_generic_table_exists() {
     # Open DB
     Sql__open "$1"
     if [[ $? -ne 0 ]]; then

@@ -15,7 +15,7 @@
 # @param $1: The statement to be executed
 #################################################
 Sql__execute() {
-    Logger__error "No sql driver selected, must call 'Sql__open' before calling 'Sql__execute'"
+    echo "No sql driver selected, must call 'Sql__open' before calling 'Sql__execute'"
     return 1
 }
 
@@ -28,7 +28,7 @@ Sql__execute() {
 #   1 otherwise
 #################################################
 Sql__ping() {
-    Logger__error "No sql driver selected, must call 'Sql__open' before calling 'Sql__ping'"
+    echo "No sql driver selected, must call 'Sql__open' before calling 'Sql__ping'"
     return 1
 }
 
@@ -42,7 +42,7 @@ Sql__ping() {
 # @returns: 0 if a table exists, 1 otherwise
 #################################################
 Sql__table_exists() {
-    Logger__error "No sql driver selected, must call 'Sql__open' before calling 'Sql__table_exists'"
+    echo "No sql driver selected, must call 'Sql__open' before calling 'Sql__table_exists'"
     return 1
 }
 
