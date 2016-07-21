@@ -132,6 +132,28 @@ if [[ $? -ne 0 ]]; then
 fi
 ```
 
+> Note: You can't run this function in a subshell, as it is responsible for sourcing in specific driver files.
+
+### Testing Connections
+
+After you open a connection, you'll likely want to verify we can actually start executing queries against it.
+
+You can test a connection by calling `Sql__ping`.
+
+```sh
+# Test connection
+local ping_output
+ping_output=$(Sql__ping)
+if [[ $? -ne 0 ]]; then
+    Sql__close
+    echo "Error connecting to database:"
+    echo "$ping_output"
+    return 1
+fi
+```
+
+> The reason why this doesn't just automatically happen in `Sql__open` is because you can't run `Sql__open` in a subshell (as it sources other files), and this function has output that we want to capture.
+
 ### Closing Connections
 
 After you are done running all of your queries against the database, you will now have to close your database.

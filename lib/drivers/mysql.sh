@@ -21,6 +21,24 @@ Sql__execute() {
 }
 
 #################################################
+# Pings the database to verify if we have a
+# valid connection.
+
+# @returns: 0 if we have a valid connection,
+#   1 otherwise
+#################################################
+Sql__ping() {
+    local out
+    out=$(Sql__execute "SELECT 1;")
+    if [[ $? -eq 0 ]]; then
+        return 0
+    else
+        echo "$out"
+        return 1
+    fi
+}
+
+#################################################
 # Checks if a specific table exists in the
 # database.
 #

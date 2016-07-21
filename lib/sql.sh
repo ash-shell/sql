@@ -12,11 +12,12 @@ Sql__DRIVER_POSTGRES='postgres'
 # all other setup operations
 #
 # @param $1: The driver to setup
+# @returns: 1 if the driver is invalid,
+#   0 otherwise
 #################################################
 Sql__open() {
     local driver="$1"
     if [[ "$driver" = "" ]]; then
-        echo "Sql__open must be passed a database driver name"
         return 1
     fi
 
@@ -26,7 +27,6 @@ Sql__open() {
     elif [[ "$driver" = "$Sql__DRIVER_POSTGRES" ]]; then
         . "$Sql__PACKAGE_LOCATION/lib/drivers/postgres.sh"
     else
-        echo "Invalid sql driver name '$driver'"
         return 1
     fi
 
