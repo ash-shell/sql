@@ -17,6 +17,18 @@ After you have Ash installed, run either one of these two commands depending on 
 
 You can optionally install this globally by adding `--global` to the end of the command.
 
+## Dependencies
+
+The external dependencies for this module you likely already have:
+
+#### MySQL Driver
+
+For the MySQL driver, the [MySQL Command Line Tool](http://dev.mysql.com/doc/refman/5.7/en/mysql.html) is required.
+
+#### PostgreSQL Driver
+
+For the PostgreSQL driver, [psql](https://www.postgresql.org/docs/9.1/static/app-psql.html) is required.
+
 ## Environment Variables
 
 Before jumping into using this library, you're going to have to set some environment variables so SQL knows how to connect to your database.
@@ -28,30 +40,65 @@ I would recommend creating a `.env` file and sourcing it into your project.
 Here is a list of all of the configurable values, if you plan on using the PostgreSQL driver.  The values that I have set below are the defaults (so if your needs match the defaults, feel free to exclude them).
 
 ```sh
+# The location of your psql command.  If psql is already in
+# your $PATH (which it probably is), no need to edit this value.
+# In the event this isn't already in your path, I recommend putting
+# this value into your ~/.ashrc file.
 SQL_POSTGRES_PATH='psql'
+
+# The PostgreSQL user you will connect with.
+# Note there is no password environment variable:
+# you must use the ~/.pgpass file
 SQL_POSTGRES_USER='postgres'
+
+# The host of your database.
 SQL_POSTGRES_HOST='localhost'
+
+# The port of your database.
 SQL_POSTGRES_PORT='5432'
+
+# The name of your database.
 SQL_POSTGRES_DATABASE_NAME=''
 ```
 
-You must use a [pgpass file](https://www.postgresql.org/docs/9.3/static/libpq-pgpass.html) for the PostgreSQL driver.
+> You must use a [pgpass file](https://www.postgresql.org/docs/9.3/static/libpq-pgpass.html) for the PostgreSQL driver.
 
 ### MySQL
 
 Here is a list of all of the configurable values, if you plan on using the MySQL driver.  The values that I have set below are the defaults (so if your needs match the defaults, feel free to exclude them).
 
 ```sh
+# The location of your mysql command.  If mysql is already in
+# your $PATH (which it probably is), no need to edit this value.
+# In the event this isn't already in your path, I recommend putting
+# this value into your ~/.ashrc file.
 SQL_MYSQL_PATH='mysql'
+
+# The MySQL user you will connect with.
 SQL_MYSQL_USER='root'
-SQL_MYSQL_HOST='localhost'
-SQL_MYSQL_PORT='3306'
-SQL_MYSQL_DATABASE_NAME=''
+
+# The MySQL users password you will connect with
 SQL_MYSQL_PASSWORD=''
+
+# The host of your database.
+SQL_MYSQL_HOST='localhost'
+
+# The port of your database.
+SQL_MYSQL_PORT='3306'
+
+# The name of your database.
+SQL_MYSQL_DATABASE_NAME=''
+
+# The location where this library will temporarily create a
+# MySQL config file.
+# http://dev.mysql.com/doc/refman/5.7/en/option-files.html
+# It is pretty unlikely you will want to change this, but in the
+# event you need to change this, I recommend putting this value
+# into your ~/.ashrc file.
 SQL_MYSQL_CONFIG_FILE='/tmp/ash_sql_mysql_config.cnf'
 ```
 
-You must have write access to `SQL_MYSQL_CONFIG_FILE`s directory.  You most likely won't ever have to change that (so just exclude it), but I've added it as configurable in the event you are on an operating system without a `/tmp` directory.
+> You must have write access to `SQL_MYSQL_CONFIG_FILE`s directory.  You most likely won't ever have to change that (so just exclude it), but I've added it as configurable in the event you are on an operating system without a `/tmp` directory.
 
 ## Usage
 
