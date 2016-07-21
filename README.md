@@ -185,6 +185,43 @@ local result=""
 result="$(Sql__execute "SELECT * FROM people;")"
 ```
 
+## Running Tests
+
+This project is fully tested, and is [using Travis](https://travis-ci.org/ash-shell/sql) to make sure all new code doesn't break anything.  Feel free to check out the [test file](./test.sh) to see our tests.
+
+If that's not enough for you, and you'd like to run the tests yourself to verify that everything works on your environment here are the following steps to run the tests:
+
+First, you're going to have to create a `MySQL`, and `PostgreSQL` database.  The name doesn't matter for either, but remember the names of the databases you've created.
+
+Inside of both databases, create the following table:
+
+```sql
+CREATE TABLE people(
+    id integer,
+    name varchar(20)
+);
+```
+
+And seed it with the following data:
+
+```sql
+INSERT INTO people VALUES
+    (1, 'Brandon'),
+    (2, 'Ryan'),
+    (3, 'Rigby'),
+    (4, 'Norbert');
+```
+
+Next, we're going to have to set environment variables so we can point the tests to the databases.  Look at the [Environment Variables(#environment-variables) section to see what variables you'll need set.
+
+After the environment variables are set run the following:
+
+```sh
+ash test github.com/ash-shell/sql
+```
+
+Hopefully all of the tests passed.  If not and you suspect it's due to a bug, please file an issue!
+
 ## License
 
 [MIT](./LICENSE.md)
