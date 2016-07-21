@@ -38,5 +38,6 @@ Sql__open() {
 # Shuts down the database
 #################################################
 Sql__close() {
+    . "$Sql__PACKAGE_LOCATION/lib/drivers/interface.sh"
     Sql_driver_close
 }
