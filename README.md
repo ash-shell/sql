@@ -1,6 +1,6 @@
 # SQL
 
-[![Build Status](https://travis-ci.org/ash-shell/sql.svg?branch=br.travis)](https://travis-ci.org/ash-shell/sql)
+[![Build Status](https://travis-ci.org/ash-shell/sql.svg?branch=br.travis)](https://travis-ci.org/ash-shell/sql) [![GitHub release](https://img.shields.io/github/release/ash-shell/sql.svg?maxAge=2592000)](https://github.com/ash-shell/sql/releases)
 
 SQL is a SQL driver for [Ash](https://github.com/ash-shell/ash).  This library provides a clean and unified interface to interact with multiple types of databases.
 
