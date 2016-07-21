@@ -48,7 +48,7 @@ SQL_POSTGRES_PATH='psql'
 
 # The PostgreSQL user you will connect with.
 # Note there is no password environment variable:
-# you must use the ~/.pgpass file
+# you must use the ~/.pgpass file.
 SQL_POSTGRES_USER='postgres'
 
 # The host of your database.
@@ -77,7 +77,7 @@ SQL_MYSQL_PATH='mysql'
 # The MySQL user you will connect with.
 SQL_MYSQL_USER='root'
 
-# The MySQL users password you will connect with
+# The MySQL users password you will connect with.
 SQL_MYSQL_PASSWORD=''
 
 # The host of your database.
