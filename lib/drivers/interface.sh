@@ -16,7 +16,22 @@
 #################################################
 Sql__execute() {
     Logger__error "No sql driver selected, must call 'Sql__open' before calling 'Sql__execute'"
+    return 1
 }
+
+
+#################################################
+# Pings the database to verify if we have a
+# valid connection.
+
+# @returns: 0 if we have a valid connection,
+#   1 otherwise
+#################################################
+Sql__ping() {
+    Logger__error "No sql driver selected, must call 'Sql__open' before calling 'Sql__ping'"
+    return 1
+}
+
 
 #################################################
 # Checks if a specific table exists in the
@@ -24,11 +39,11 @@ Sql__execute() {
 #
 # @param $1: The name of the table to check if
 #   if it exists.
-# @returns: 0 if a table exists, 1 if no table
-#   exists
+# @returns: 0 if a table exists, 1 otherwise
 #################################################
 Sql__table_exists() {
     Logger__error "No sql driver selected, must call 'Sql__open' before calling 'Sql__table_exists'"
+    return 1
 }
 
 #################################################
