@@ -6,7 +6,11 @@
 # as this interface is actually imported before any specific driver is
 # loaded.
 #
-# When creating a driver, you must override all methods here.
+# When creating a driver, you must override all methods and variables here.
+
+# How boolean values are represented
+Sql__TRUE=""
+Sql__FALSE=""
 
 #################################################
 # Executes a database statement and outputs the
