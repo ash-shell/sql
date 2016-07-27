@@ -1,5 +1,9 @@
 #!/bin/bash
 
+# How boolean values are represented
+Sql__TRUE="t"
+Sql__FALSE="f"
+
 #################################################
 # Executes a database statement and
 # gives the output

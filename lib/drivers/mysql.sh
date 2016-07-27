@@ -3,6 +3,10 @@
 # Temporary config file location
 SQL_MYSQL_CONFIG_FILE="/tmp/ash_sql_mysql_config.cnf"
 
+# How boolean values are represented
+Sql__TRUE="1"
+Sql__FALSE="0"
+
 #################################################
 # Executes a database statement and
 # gives the output
